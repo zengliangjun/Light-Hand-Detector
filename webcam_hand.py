@@ -3,8 +3,6 @@ import time
 
 import cv2
 import numpy as np
-import onnx
-from caffe2.python.onnx import backend
 import onnxruntime as ort
 try:
     from .utils.box_utils_numpy import hard_nms
@@ -51,11 +49,6 @@ def predict(width, height, confidences, boxes, prob_threshold, iou_threshold, to
     return picked_box_probs[:, :4].astype(np.int32), np.array(picked_labels), picked_box_probs[:, 4]
 
 class_names = [name.strip() for name in open(args.label_path).readlines()]
-
-predictor = onnx.load(args.module_path)
-onnx.checker.check_model(predictor)
-onnx.helper.printable_graph(predictor.graph)
-predictor = backend.prepare(predictor, device="CPU") # CUDA
 
 ort_session = ort.InferenceSession(args.module_path)
 input_name = ort_session.get_inputs()[0].name

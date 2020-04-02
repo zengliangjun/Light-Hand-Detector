@@ -6,9 +6,7 @@
 ## Tested the environment that works
 - Ubuntu16.04
 - Python3.7
-- onnx1.6.0
 - onnxruntime1.2
-- CUDA10.0 + CUDNN7.6
 
 ## 
 
